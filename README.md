@@ -1,29 +1,41 @@
-# YOLOv8 Office Object Detection
+﻿# YOLOv8 Office Object Detection
 
-This project uses YOLOv8 to detect objects in an office environment.
+This project uses YOLOv8 to detect office objects.
 
 ## Setup
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/ahmetyilmazzz/YOLOv8-Office-Object-Detection.git
-   cd YOLOv8-Office-Object-Detection
-   ```
-
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Download the pre-trained model:
-   The model `yolov8n.pt` is not included in the repository due to its size. You can download it from the official YOLOv8 repository or by running the following command:
-   ```bash
-   wget https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt
-   ```
+```bash
+python -m pip install -r requirements.txt
+```
 
 ## Usage
 
-To run the object detection on an image, use the following command:
+### Train
+
 ```bash
-python main.py
+python main.py train --epochs 15 --imgsz 640
 ```
+
+Running `python main.py` also starts training by default.
+
+### Predict
+
+If a trained `best.pt` exists, the latest one is used automatically.
+If not, the script falls back to `yolov8n.pt` and runs prediction on a sample dataset image.
+
+```bash
+python main.py predict
+```
+
+To predict on a specific image:
+
+```bash
+python main.py predict --source Dataset/train/images/example.jpg
+```
+
+## Fixed issues
+
+- Missing `ultralytics` dependency caused startup failures.
+- `Dataset/data.yaml` had an incorrect `path` value.
+- `predict.py` referenced a non-existent test image.
+- `main.py` now uses a safer CLI flow instead of training immediately on import.
